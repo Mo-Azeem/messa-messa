@@ -20,6 +20,11 @@ export default function Index() {
       setIsConnected(true);
     });
 
+    socket.on('recieveMessage', (data) => {
+      console.log(data);
+      
+    })
+
     socket.on('disconnect', () => {
       setIsConnected(false);
     });
@@ -46,6 +51,7 @@ export default function Index() {
         sender: myName,
         message: chatInput.value,
       };
+      socket.emit(newMessage.message)
       setMessages([...messages, newMessage]);
       chatInput.value = "";
     }
