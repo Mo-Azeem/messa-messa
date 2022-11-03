@@ -21,6 +21,11 @@ export default function Index() {
     });
 
     socket.on("recieveMessage", (data) => {
+      const newMessage: IChatMessage = {
+        message: data.message,
+        sender: myName,
+      };
+      setMessages([...messages, newMessage]);
       console.log(data);
     });
 
@@ -51,7 +56,6 @@ export default function Index() {
         message: chatInput.value,
       };
       socket.emit("createMessage", { message: newMessage.message });
-      setMessages([...messages, newMessage]);
       chatInput.value = "";
     }
   }
