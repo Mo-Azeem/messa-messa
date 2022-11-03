@@ -7,7 +7,7 @@ interface IChatMessage {
   timestamp?: Date;
 }
 
-const socket = io('http://localhost:3000')
+const socket = io("http://localhost:3000");
 
 export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
@@ -16,42 +16,41 @@ export default function Index() {
   const myName = "Mohammed";
 
   useEffect(() => {
-    socket.on('connect', () => {
+    socket.on("connect", () => {
       setIsConnected(true);
     });
 
-    socket.on('recieveMessage', (data) => {
+    socket.on("recieveMessage", (data) => {
       console.log(data);
-      
-    })
+    });
 
-    socket.on('disconnect', () => {
+    socket.on("disconnect", () => {
       setIsConnected(false);
     });
 
-    socket.on('pong', () => {
+    socket.on("pong", () => {
       setLastPong(new Date().toISOString());
     });
 
     return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('pong');
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("pong");
     };
   }, []);
-  
+
   function handleSendMessage(e: MouseEvent) {
     e.preventDefault();
     const chatInput = document.getElementById(
       "chat-textbox"
     ) as HTMLInputElement;
 
-    if ((/\S/.test(chatInput.value))) {
+    if (/\S/.test(chatInput.value)) {
       const newMessage: IChatMessage = {
         sender: myName,
         message: chatInput.value,
       };
-      socket.emit(newMessage.message)
+      socket.emit("createMessage", { message: newMessage.message });
       setMessages([...messages, newMessage]);
       chatInput.value = "";
     }
