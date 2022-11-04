@@ -73,7 +73,7 @@ export default function Index() {
 
   return (
     //h-screen w-screen
-    <div className="chat-box flex flex-col justify-between">
+    <div className="chat-box flex flex-col justify-between relative">
       <Head>
         <meta
           name="viewport"
@@ -83,7 +83,7 @@ export default function Index() {
       {/* {lastMsg && <h1>{JSON.stringify(lastMsg)}</h1>} */}
       <ul
         id="chat-messages"
-        className="chat-messages flex flex-col m-2 h-full overflow-auto"
+        className="chat-messages flex flex-col m-2 h-auto overflow-auto"
       >
         {messages.map((message, index) => {
           return (
@@ -114,7 +114,7 @@ export default function Index() {
         </h1>
       ) : null}
 
-      <form className="chat-input flex flex-row gap-1 bg-cyan-500 py-6 px-3">
+      <form className="chat-input flex flex-row gap-1 bg-cyan-500 py-6 px-3 w-full bottom-0">
         <input
           className="w-full mx-5 rounded outline-none px-4 py-2 text-cyan-700 text-sm "
           type="text"
