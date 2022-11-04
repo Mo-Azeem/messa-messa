@@ -8,15 +8,15 @@ interface IChatMessage {
   timestamp?: Date;
 }
 
+const senderId = Math.random();
 const socket = io("https://playground.ahmed-gamal.com");
 
 export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState<string | null>(null);
-  const senderId = Math.random();
+  const [lastMsg, setLastMsg] = useState<IChatMessage | null>(null);
 
-  console.log(process.env.socket_link);
   useEffect(() => {
     socket.on("connect", () => {
       setIsConnected(true);
@@ -25,9 +25,11 @@ export default function Index() {
     socket.on("recieveMessage", (data) => {
       const newMessage: IChatMessage = {
         message: data.message,
-        senderId,
+        senderId: data.senderId,
       };
+
       setMessages([...messages, newMessage]);
+      setLastMsg(newMessage);
     });
 
     socket.on("disconnect", () => {
@@ -73,6 +75,7 @@ export default function Index() {
 
   return (
     <div className="chat-box flex flex-col h-screen w-screen justify-between">
+      {lastMsg && <h1>{JSON.stringify(lastMsg)}</h1>}
       <ul
         id="chat-messages"
         className="chat-messages flex flex-col m-2 h-full overflow-auto"
@@ -82,12 +85,12 @@ export default function Index() {
             <div
               key={index}
               className={`message flex w-full ${
-                message.senderId === senderId ? "flex-row-reverse" : "flex-row"
+                message.senderId !== senderId ? "flex-row-reverse" : "flex-row"
               }`}
             >
               <li
                 className={`chat-message ${
-                  message.senderId === senderId ? "bg-gray-400" : "bg-cyan-500"
+                  message.senderId !== senderId ? "bg-gray-400" : "bg-cyan-500"
                 }`}
               >
                 {message.message}
