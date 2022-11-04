@@ -75,7 +75,7 @@ export default function Index() {
 
   return (
     <div className="chat-box flex flex-col h-screen w-screen justify-between">
-      {lastMsg && <h1>{JSON.stringify(lastMsg)}</h1>}
+      {/* {lastMsg && <h1>{JSON.stringify(lastMsg)}</h1>} */}
       <ul
         id="chat-messages"
         className="chat-messages flex flex-col m-2 h-full overflow-auto"
@@ -88,13 +88,17 @@ export default function Index() {
                 message.senderId !== senderId ? "flex-row-reverse" : "flex-row"
               }`}
             >
-              <li
-                className={`chat-message ${
-                  message.senderId !== senderId ? "bg-gray-400" : "bg-cyan-500"
-                }`}
-              >
-                {message.message}
-              </li>
+              <div className="message-wrapper">
+                <p
+                  className={`chat-message ${
+                    message.senderId !== senderId
+                      ? "bg-gray-400"
+                      : "bg-cyan-500"
+                  }`}
+                >
+                  {message.message}
+                </p>
+              </div>
             </div>
           );
         })}

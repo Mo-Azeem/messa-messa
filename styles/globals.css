@@ -6,10 +6,16 @@ body {
   @apply bg-cyan-100
 }
 
+.message-wrapper {
+  max-width: 70%;
+  overflow: hidden;
+}
+
 .chat-message {
-  @apply text-gray-50 my-1 py-4 px-4 rounded-md font-normal w-[60%] max-w-[350px]
+  @apply text-gray-50 my-1 py-4 px-4 rounded-md font-normal
 }
 
 .chat-messages {
   overflow-anchor: auto;
+  word-break: break-all;
 }
