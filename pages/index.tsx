@@ -16,6 +16,24 @@ export default function Index() {
   const myName = "Mohammed";
 
   useEffect(() => {
+    setMessages([
+      {
+        sender: myName,
+        message: "doood",
+      },
+      {
+        sender: "Not ME",
+        message: "doood",
+      },
+      {
+        sender: myName,
+        message: "doood",
+      },
+      {
+        sender: "Not Me",
+        message: "doood",
+      },
+    ]);
     socket.on("connect", () => {
       setIsConnected(true);
     });
@@ -73,9 +91,16 @@ export default function Index() {
       >
         {messages.map((message, index) => {
           return (
-            <li key={index} className="chat-message">
-              {message.message}
-            </li>
+            <div
+              key={index}
+              className={`message flex w-full ${
+                message.sender != myName ? "flex-row-reverse" : "flex-row"
+              }`}
+            >
+              <li className={`chat-message ${
+                message.sender != myName ? "bg-green-500" : "bg-cyan-500"
+              }`}>{message.message}</li>
+            </div>
           );
         })}
       </ul>
