@@ -8,7 +8,7 @@ interface IChatMessage {
   timestamp?: Date;
 }
 
-const socket = io("http://178.62.227.58:3000");
+const socket = io(process.env.socket_link as string);
 
 export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
@@ -65,14 +65,13 @@ export default function Index() {
     if (chatBox) chatBox.scrollTop += 5000;
   }, [messages]);
 
-
+  if (!isConnected)
+    return (
+      <h1 className="text-cyan-600 text-3xl m-2 font-bold">Conecting...</h1>
+    );
 
   return (
     <div className="chat-box flex flex-col h-screen w-screen justify-between">
-      <Head>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/> 
-
-      </Head>
       <ul
         id="chat-messages"
         className="chat-messages flex flex-col m-2 h-full overflow-auto"
