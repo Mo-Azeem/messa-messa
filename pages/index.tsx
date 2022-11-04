@@ -7,7 +7,7 @@ interface IChatMessage {
   timestamp?: Date;
 }
 
-const socket = io("https://wild-donuts-brake-154-238-130-167.loca.lt");
+const socket = io("http://178.62.227.58:3000");
 
 export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
@@ -26,7 +26,6 @@ export default function Index() {
         sender: myName,
       };
       setMessages([...messages, newMessage]);
-      console.log(data);
     });
 
     socket.on("disconnect", () => {
@@ -42,7 +41,7 @@ export default function Index() {
       socket.off("disconnect");
       socket.off("pong");
     };
-  }, []);
+  }, [messages]);
 
   function handleSendMessage(e: MouseEvent) {
     e.preventDefault();
@@ -62,8 +61,10 @@ export default function Index() {
 
   useEffect(() => {
     const chatBox = document.getElementById("chat-messages");
-    if (chatBox) chatBox.scrollTop += 1000;
+    if (chatBox) chatBox.scrollTop += 5000;
   }, [messages]);
+
+
 
   return (
     <div className="chat-box flex flex-col h-screen w-screen justify-between">
@@ -103,6 +104,7 @@ export default function Index() {
           name="chat-textbox"
           id="chat-textbox"
           placeholder="Type a message"
+          autoComplete="off"
         />
         <button
           className="bg-cyan-500 px-3 text-gray-50"
