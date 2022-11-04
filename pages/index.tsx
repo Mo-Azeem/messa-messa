@@ -72,8 +72,8 @@ export default function Index() {
     );
 
   return (
-    //h-screen
-    <div className="chat-box flex flex-col w-screen justify-between">
+    //h-screen w-screen
+    <div className="chat-box flex flex-col justify-between">
       {/* {lastMsg && <h1>{JSON.stringify(lastMsg)}</h1>} */}
       <ul
         id="chat-messages"

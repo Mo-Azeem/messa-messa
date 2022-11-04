@@ -4,6 +4,7 @@
 
 html, body, #__next, .chat-box{
   height: 100%;
+  width: 100%;
 }
 
 body {
