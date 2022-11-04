@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
@@ -68,6 +69,10 @@ export default function Index() {
 
   return (
     <div className="chat-box flex flex-col h-screen w-screen justify-between">
+      <Head>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/> 
+
+      </Head>
       <ul
         id="chat-messages"
         className="chat-messages flex flex-col m-2 h-full overflow-auto"
