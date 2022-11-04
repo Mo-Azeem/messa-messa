@@ -15,7 +15,6 @@ export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState<string | null>(null);
-  const [lastMsg, setLastMsg] = useState<IChatMessage | null>(null);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -29,7 +28,6 @@ export default function Index() {
       };
 
       setMessages([...messages, newMessage]);
-      setLastMsg(newMessage);
     });
 
     socket.on("disconnect", () => {
@@ -85,7 +83,7 @@ export default function Index() {
             <div
               key={index}
               className={`message flex w-full ${
-                message.senderId !== senderId ? "flex-row-reverse" : "flex-row"
+                message.senderId !== senderId ? "flex-row" : "flex-row-reverse"
               }`}
             >
               <div className="message-wrapper">
