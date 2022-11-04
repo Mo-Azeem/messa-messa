@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 interface IChatMessage {
-  sender: string;
+  senderId: number;
   message: string;
   timestamp?: Date;
 }
@@ -14,7 +14,8 @@ export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState<string | null>(null);
-  const myName = "Mohammed";
+  const senderId = Math.random();
+
   console.log(process.env.socket_link);
   useEffect(() => {
     socket.on("connect", () => {
@@ -24,7 +25,7 @@ export default function Index() {
     socket.on("recieveMessage", (data) => {
       const newMessage: IChatMessage = {
         message: data.message,
-        sender: myName,
+        senderId,
       };
       setMessages([...messages, newMessage]);
     });
@@ -52,10 +53,10 @@ export default function Index() {
 
     if (/\S/.test(chatInput.value)) {
       const newMessage: IChatMessage = {
-        sender: myName,
+        senderId,
         message: chatInput.value,
       };
-      socket.emit("createMessage", { message: newMessage.message });
+      socket.emit("createMessage", { message: newMessage.message, senderId });
       chatInput.value = "";
     }
   }
@@ -81,12 +82,12 @@ export default function Index() {
             <div
               key={index}
               className={`message flex w-full ${
-                message.sender != myName ? "flex-row-reverse" : "flex-row"
+                message.senderId === senderId ? "flex-row-reverse" : "flex-row"
               }`}
             >
               <li
                 className={`chat-message ${
-                  message.sender != myName ? "bg-gray-400" : "bg-cyan-500"
+                  message.senderId === senderId ? "bg-gray-400" : "bg-cyan-500"
                 }`}
               >
                 {message.message}
