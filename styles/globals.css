@@ -23,4 +23,6 @@ body {
 .chat-messages {
   overflow-anchor: auto;
   word-break: break-all;
+  flex: auto;
+  place-content: flex-end;
 }
