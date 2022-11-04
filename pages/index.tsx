@@ -8,14 +8,14 @@ interface IChatMessage {
   timestamp?: Date;
 }
 
-const socket = io(process.env.socket_link as string);
+const socket = io("https://playground.ahmed-gamal.com");
 
 export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState<string | null>(null);
   const myName = "Mohammed";
-
+  console.log(process.env.socket_link);
   useEffect(() => {
     socket.on("connect", () => {
       setIsConnected(true);
