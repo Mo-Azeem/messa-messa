@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, #__next, .chat-box{
+  height: 100%;
+}
+
 body {
   @apply bg-cyan-100
 }
