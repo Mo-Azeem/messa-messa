@@ -7,7 +7,7 @@ interface IChatMessage {
   timestamp?: Date;
 }
 
-const socket = io("http://localhost:3000");
+const socket = io("https://wild-donuts-brake-154-238-130-167.loca.lt");
 
 export default function Index() {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
@@ -16,24 +16,6 @@ export default function Index() {
   const myName = "Mohammed";
 
   useEffect(() => {
-    setMessages([
-      {
-        sender: myName,
-        message: "doood",
-      },
-      {
-        sender: "Not ME",
-        message: "doood",
-      },
-      {
-        sender: myName,
-        message: "doood",
-      },
-      {
-        sender: "Not Me",
-        message: "doood",
-      },
-    ]);
     socket.on("connect", () => {
       setIsConnected(true);
     });
@@ -84,10 +66,10 @@ export default function Index() {
   }, [messages]);
 
   return (
-    <div className="chat-box flex flex-col w-auto m-1 p-5 max-w-[750px]">
+    <div className="chat-box flex flex-col h-screen w-screen justify-between">
       <ul
         id="chat-messages"
-        className="chat-messages flex flex-col m-2 max-h-[400px] overflow-auto"
+        className="chat-messages flex flex-col m-2 h-full overflow-auto"
       >
         {messages.map((message, index) => {
           return (
@@ -97,9 +79,13 @@ export default function Index() {
                 message.sender != myName ? "flex-row-reverse" : "flex-row"
               }`}
             >
-              <li className={`chat-message ${
-                message.sender != myName ? "bg-green-500" : "bg-cyan-500"
-              }`}>{message.message}</li>
+              <li
+                className={`chat-message ${
+                  message.sender != myName ? "bg-gray-400" : "bg-cyan-500"
+                }`}
+              >
+                {message.message}
+              </li>
             </div>
           );
         })}
@@ -110,7 +96,7 @@ export default function Index() {
         </h1>
       ) : null}
 
-      <form className="chat-input flex flex-row gap-1 my-3 bg-cyan-500 px-3 py-6 rounded-xl">
+      <form className="chat-input flex flex-row gap-1 bg-cyan-500 py-6 px-3">
         <input
           className="w-full mx-5 rounded outline-none px-4 py-2 text-cyan-700 text-sm "
           type="text"
@@ -119,7 +105,7 @@ export default function Index() {
           placeholder="Type a message"
         />
         <button
-          className="bg-cyan-500 px-3 py-1 rounded-sm text-gray-50 hover:bg-cyan-700"
+          className="bg-cyan-500 px-3 text-gray-50"
           onClick={(e) => handleSendMessage(e as unknown as MouseEvent)}
         >
           Send

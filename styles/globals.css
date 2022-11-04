@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-cyan-100
+}
+
 .chat-message {
-  @apply text-gray-50 my-1 py-4 px-4 rounded-lg text-sm font-thin w-[60%] max-w-[350px]
+  @apply text-gray-50 my-1 py-4 px-4 rounded-md text-sm font-thin w-[60%] max-w-[350px]
 }
 
 .chat-messages {
