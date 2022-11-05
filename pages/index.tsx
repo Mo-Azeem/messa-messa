@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
+import useSound from "use-sound";
+
 interface IChatMessage {
   senderId: number;
   message: string;
@@ -12,6 +14,7 @@ const senderId = Math.random();
 const socket = io("https://playground.ahmed-gamal.com");
 
 export default function Index() {
+  const [play] = useSound("msgsfx2.ogg");
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState<string | null>(null);
@@ -26,7 +29,7 @@ export default function Index() {
         message: data.message,
         senderId: data.senderId,
       };
-
+      if (data.senderId !== senderId) play();
       setMessages([...messages, newMessage]);
     });
 
